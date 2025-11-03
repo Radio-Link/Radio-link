@@ -147,7 +147,7 @@ The Walkie-Talkie app is a real-time voice communication platform built with Flu
       content: `
 ## System Architecture Diagram
 
-\`\`\`mermaid
+```mermaid
 graph TB
     subgraph "Client Apps"
         A1[Flutter App - User A]
@@ -198,7 +198,7 @@ graph TB
     FCM_SERV -->|iOS| APNS
     FCM -->|Push| A1
     APNS -->|Push| A2
-\`\`\`
+```
 
 **Architecture Explanation:**
 
@@ -216,7 +216,7 @@ graph TB
 
 ## Component Interaction Flow
 
-\`\`\`mermaid
+```mermaid
 sequenceDiagram
     participant User
     participant Flutter
@@ -249,7 +249,7 @@ sequenceDiagram
     Backend-->>Socket.io: Token Valid
     Socket.io-->>Flutter: Connected
     Flutter->>User: Show Dashboard
-\`\`\`
+```
 
 ## Data Flow Architecture
 
@@ -342,49 +342,49 @@ sequenceDiagram
 
 Create `.env` file in your backend:
 
-\`\`\`
+```
 AUTH0_DOMAIN=your-tenant.us.auth0.com
 AUTH0_CLIENT_ID=your_client_id_here
 AUTH0_CLIENT_SECRET=your_client_secret_here
 AUTH0_AUDIENCE=https://api.walkietalkie.com
 AUTH0_ISSUER=https://your-tenant.us.auth0.com/
-\`\`\`
+```
 
 For Flutter app, store in environment config:
 
-\`\`\`
+```
 AUTH0_DOMAIN=your-tenant.us.auth0.com
 AUTH0_CLIENT_ID=your_mobile_client_id
 AUTH0_REDIRECT_URI=com.yourcompany.walkietalkie://login-callback
-\`\`\`
+```
 
 ## Flutter Auth0 Integration
 
 ### Required Packages
 
 Add to `pubspec.yaml`:
-\`\`\`
+```
 dependencies:
   auth0_flutter: ^1.4.0
   flutter_secure_storage: ^9.0.0
   flutter_riverpod: ^2.4.0
-\`\`\`
+```
 
 ### Auth0 Configuration Steps
 
 **Android Setup (`android/app/build.gradle`):**
 - Add manifest placeholders:
-  \`\`\`
+  ```
   android {
     defaultConfig {
       manifestPlaceholders = [auth0Domain: "YOUR_DOMAIN", auth0Scheme: "YOUR_SCHEME"]
     }
   }
-  \`\`\`
+  ```
 
 **iOS Setup (`ios/Runner/Info.plist`):**
 - Add URL scheme:
-  \`\`\`xml
+  ```xml
   <key>CFBundleURLTypes</key>
   <array>
     <dict>
@@ -398,7 +398,7 @@ dependencies:
       </array>
     </dict>
   </array>
-  \`\`\`
+  ```
 
 ### Authentication Service Architecture
 
@@ -421,7 +421,7 @@ dependencies:
 
 ### First-Time User Sign-Up Flow
 
-\`\`\`mermaid
+```mermaid
 sequenceDiagram
     participant User
     participant App
@@ -453,11 +453,11 @@ sequenceDiagram
     Backend->>Backend: Authenticate socket
     Backend-->>App: Socket connected
     App->>User: Navigate to Dashboard
-\`\`\`
+```
 
 ### Returning User Login Flow
 
-\`\`\`mermaid
+```mermaid
 sequenceDiagram
     participant User
     participant App
@@ -485,7 +485,7 @@ sequenceDiagram
         User->>App: Tap login
         Note over App,Auth0: Follow first-time flow
     end
-\`\`\`
+```
 
 ## Token Management Strategy
 
@@ -571,50 +571,50 @@ Socket.io serves as the signaling server, facilitating:
 
 ### Required Packages
 
-\`\`\`
+```
 dependencies:
   flutter_webrtc: ^0.9.48
   socket_io_client: ^2.0.3
   permission_handler: ^11.0.1
   flutter_riverpod: ^2.4.0
-\`\`\`
+```
 
 ### Platform Permissions
 
 **Android (`android/app/src/main/AndroidManifest.xml`):**
-\`\`\`xml
+```xml
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
 <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-\`\`\`
+```
 
 **iOS (`ios/Runner/Info.plist`):**
-\`\`\`xml
+```xml
 <key>NSMicrophoneUsageDescription</key>
 <string>Microphone access required for voice communication</string>
 <key>NSCameraUsageDescription</key>
 <string>Camera access may be required for future video calls</string>
-\`\`\`
+```
 
 ### WebRTC Configuration
 
 **ICE Servers Configuration:**
 
 Free STUN servers (for development):
-\`\`\`
+```
 {
   'iceServers': [
     {'urls': 'stun:stun.l.google.com:19302'},
     {'urls': 'stun:stun1.l.google.com:19302'},
   ]
 }
-\`\`\`
+```
 
 TURN server configuration (production):
-\`\`\`
+```
 {
   'iceServers': [
     {'urls': 'stun:stun.l.google.com:19302'},
@@ -625,7 +625,7 @@ TURN server configuration (production):
     }
   ]
 }
-\`\`\`
+```
 
 **Recommended TURN Providers:**
 1. **Twilio TURN** (easiest, pay-as-you-go)
@@ -650,20 +650,20 @@ TURN server configuration (production):
 ### Server Configuration
 
 **Install Dependencies:**
-\`\`\`bash
+```bash
 npm install express socket.io cors dotenv
 npm install --save-dev @types/socket.io
-\`\`\`
+```
 
 **Environment Variables:**
-\`\`\`
+```
 SOCKET_PORT=3001
 SOCKET_CORS_ORIGIN=*
 AUTH0_DOMAIN=your-tenant.auth0.com
 TURN_SERVER_URL=turn:your-server.com:3478
 TURN_USERNAME=user
 TURN_CREDENTIAL=pass
-\`\`\`
+```
 
 ### Socket.io Server Structure
 
@@ -698,7 +698,7 @@ TURN_CREDENTIAL=pass
 ### Room Management Logic
 
 **Room Structure:**
-\`\`\`
+```
 {
   channelId: string,
   users: [{
@@ -710,7 +710,7 @@ TURN_CREDENTIAL=pass
   maxUsers: number,
   type: 'duo' | 'group' | 'public'
 }
-\`\`\`
+```
 
 **Join Channel Flow:**
 1. Client emits `join-channel` with {channelId, userId, JWT}
@@ -732,7 +732,7 @@ TURN_CREDENTIAL=pass
 
 ### Peer-to-Peer Connection Establishment
 
-\`\`\`mermaid
+```mermaid
 sequenceDiagram
     participant A as User A (Caller)
     participant SA as Socket.io Server
@@ -771,11 +771,11 @@ sequenceDiagram
     Note over A,B: Connection Established
     A->>B: Direct audio stream (RTP)
     B->>A: Acknowledgment
-\`\`\`
+```
 
 ### PTT Lifecycle (Push-to-Talk)
 
-\`\`\`mermaid
+```mermaid
 sequenceDiagram
     participant User
     participant App
@@ -805,7 +805,7 @@ sequenceDiagram
     else Permission denied
         App->>User: Show permission request dialog
     end
-\`\`\`
+```
 
 ## Flutter WebRTC Service Implementation
 
@@ -908,7 +908,7 @@ For group calls (>2 participants), implement **Selective Forwarding Unit (SFU)**
 - Set opus parameters: maxaveragebitrate=510000, stereo=0, useinbandfec=1
 
 **Audio Constraints:**
-\`\`\`
+```
 {
   audio: {
     echoCancellation: true,
@@ -918,7 +918,7 @@ For group calls (>2 participants), implement **Selective Forwarding Unit (SFU)**
     channelCount: 1
   }
 }
-\`\`\`
+```
 
 ## Common WebRTC Issues & Solutions
 
@@ -990,7 +990,7 @@ Push notifications alert users to incoming calls when the app is in the backgrou
 
 ### FCM + APNs Integration Flow
 
-\`\`\`mermaid
+```mermaid
 graph LR
     A[Backend Server] -->|Send Notification| B[Firebase FCM]
     B -->|Android| C[Android Device]
@@ -1000,7 +1000,7 @@ graph LR
     E -->|Deliver| F
     F -->|User Taps| G[App - Foreground]
     G -->|Auto-join Call| H[WebRTC Connection]
-\`\`\`
+```
 
 ## Firebase Setup
 
@@ -1037,29 +1037,29 @@ graph LR
 ### Flutter Firebase Setup
 
 **Add Dependencies:**
-\`\`\`yaml
+```yaml
 dependencies:
   firebase_core: ^2.24.0
   firebase_messaging: ^14.7.6
   flutter_local_notifications: ^16.3.0
-\`\`\`
+```
 
 **Android Configuration:**
 
 `android/build.gradle`:
-\`\`\`gradle
+```gradle
 dependencies {
     classpath 'com.google.gms:google-services:4.4.0'
 }
-\`\`\`
+```
 
 `android/app/build.gradle`:
-\`\`\`gradle
+```gradle
 apply plugin: 'com.google.gms.google-services'
-\`\`\`
+```
 
 `android/app/src/main/AndroidManifest.xml`:
-\`\`\`xml
+```xml
 <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 <uses-permission android:name="android.permission.VIBRATE"/>
 
@@ -1072,12 +1072,12 @@ apply plugin: 'com.google.gms.google-services'
         android:name="io.flutter.plugins.firebase.messaging.FlutterFirebaseMessagingBackgroundService"
         android:exported="false" />
 </application>
-\`\`\`
+```
 
 **iOS Configuration:**
 
 `ios/Runner/AppDelegate.swift`:
-\`\`\`swift
+```swift
 import UIKit
 import Flutter
 import FirebaseCore
@@ -1104,10 +1104,10 @@ import FirebaseMessaging
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }
-\`\`\`
+```
 
 `ios/Runner/Info.plist`:
-\`\`\`xml
+```xml
 <key>UIBackgroundModes</key>
 <array>
     <string>remote-notification</string>
@@ -1115,7 +1115,7 @@ import FirebaseMessaging
 </array>
 <key>FirebaseAppDelegateProxyEnabled</key>
 <false/>
-\`\`\`
+```
 
 **Enable Capabilities in Xcode:**
 1. Open ios/Runner.xcworkspace
@@ -1159,9 +1159,9 @@ import FirebaseMessaging
 ### Node.js Firebase Admin Setup
 
 **Install Firebase Admin SDK:**
-\`\`\`bash
+```bash
 npm install firebase-admin
-\`\`\`
+```
 
 **Service Account Setup:**
 1. Firebase Console → Project Settings → Service Accounts
@@ -1171,10 +1171,10 @@ npm install firebase-admin
 5. Reference in .env: `FIREBASE_SERVICE_ACCOUNT_PATH=./firebase-adminsdk.json`
 
 **Environment Variables:**
-\`\`\`
+```
 FIREBASE_SERVICE_ACCOUNT_PATH=./config/firebase-adminsdk.json
 FIREBASE_DATABASE_URL=https://walkie-talkie-xxxxx.firebaseio.com
-\`\`\`
+```
 
 **Initialize in Backend:**
 - Import firebase-admin
@@ -1206,7 +1206,7 @@ FIREBASE_DATABASE_URL=https://walkie-talkie-xxxxx.firebaseio.com
 **Notification Payload Structure:**
 
 For Data-Only (Background):
-\`\`\`json
+```json
 {
   "token": "user_device_fcm_token",
   "data": {
@@ -1218,10 +1218,10 @@ For Data-Only (Background):
     "priority": "high"
   }
 }
-\`\`\`
+```
 
 For Notification + Data (Foreground/Background):
-\`\`\`json
+```json
 {
   "token": "user_device_fcm_token",
   "notification": {
@@ -1256,7 +1256,7 @@ For Notification + Data (Foreground/Background):
     }
   }
 }
-\`\`\`
+```
 
 ### Flutter: Handle Incoming Notifications
 
@@ -1312,7 +1312,7 @@ For Notification + Data (Foreground/Background):
 
 ## Push Notification Lifecycle
 
-\`\`\`mermaid
+```mermaid
 sequenceDiagram
     participant A as User A
     participant Backend
@@ -1341,7 +1341,7 @@ sequenceDiagram
         B->>B: Auto-join call (WebRTC)
         B->>A: Connected
     end
-\`\`\`
+```
 
 ## Notification Best Practices
 
@@ -1414,7 +1414,7 @@ The database stores user profiles, channels/groups, session history, and device 
 ### Core Tables
 
 **1. users**
-\`\`\`
+```
 Table: users
 Columns:
 - id (UUID, PRIMARY KEY, DEFAULT gen_random_uuid())
@@ -1431,10 +1431,10 @@ Columns:
 Indexes:
 - idx_users_auth0_id ON users(auth0_id)
 - idx_users_email ON users(email)
-\`\`\`
+```
 
 **2. device_tokens**
-\`\`\`
+```
 Table: device_tokens
 Columns:
 - id (UUID, PRIMARY KEY, DEFAULT gen_random_uuid())
@@ -1449,10 +1449,10 @@ Columns:
 Indexes:
 - idx_device_tokens_user_id ON device_tokens(user_id)
 - idx_device_tokens_token ON device_tokens(token)
-\`\`\`
+```
 
 **3. channels**
-\`\`\`
+```
 Table: channels
 Columns:
 - id (UUID, PRIMARY KEY, DEFAULT gen_random_uuid())
@@ -1469,10 +1469,10 @@ Indexes:
 - idx_channels_code ON channels(channel_code)
 - idx_channels_type ON channels(type)
 - idx_channels_owner ON channels(owner_id)
-\`\`\`
+```
 
 **4. channel_members**
-\`\`\`
+```
 Table: channel_members
 Columns:
 - id (UUID, PRIMARY KEY, DEFAULT gen_random_uuid())
@@ -1486,10 +1486,10 @@ Indexes:
 - idx_channel_members_channel ON channel_members(channel_id)
 - idx_channel_members_user ON channel_members(user_id)
 - unique_channel_user ON channel_members(channel_id, user_id) UNIQUE
-\`\`\`
+```
 
 **5. duo_connections**
-\`\`\`
+```
 Table: duo_connections
 Columns:
 - id (UUID, PRIMARY KEY, DEFAULT gen_random_uuid())
@@ -1502,10 +1502,10 @@ Columns:
 
 Indexes:
 - idx_duo_connections_users ON duo_connections(user1_id, user2_id)
-\`\`\`
+```
 
 **6. call_sessions**
-\`\`\`
+```
 Table: call_sessions
 Columns:
 - id (UUID, PRIMARY KEY, DEFAULT gen_random_uuid())
@@ -1520,10 +1520,10 @@ Columns:
 Indexes:
 - idx_call_sessions_channel ON call_sessions(channel_id)
 - idx_call_sessions_started ON call_sessions(started_at)
-\`\`\`
+```
 
 **7. call_participants**
-\`\`\`
+```
 Table: call_participants
 Columns:
 - id (UUID, PRIMARY KEY, DEFAULT gen_random_uuid())
@@ -1536,12 +1536,12 @@ Columns:
 Indexes:
 - idx_call_participants_session ON call_participants(session_id)
 - idx_call_participants_user ON call_participants(user_id)
-\`\`\`
+```
 
 ### Database Setup Instructions
 
 **1. Install PostgreSQL:**
-\`\`\`bash
+```bash
 # Ubuntu/Debian
 sudo apt-get install postgresql postgresql-contrib
 
@@ -1551,21 +1551,21 @@ brew install postgresql@15
 # Start service
 sudo systemctl start postgresql  # Linux
 brew services start postgresql@15  # macOS
-\`\`\`
+```
 
 **2. Create Database:**
-\`\`\`sql
+```sql
 CREATE DATABASE walkietalkie;
 CREATE USER walkietalkie_user WITH PASSWORD 'your_secure_password';
 GRANT ALL PRIVILEGES ON DATABASE walkietalkie TO walkietalkie_user;
-\`\`\`
+```
 
 **3. Environment Variables:**
-\`\`\`
+```
 DATABASE_URL=postgresql://walkietalkie_user:your_secure_password@localhost:5432/walkietalkie
 DATABASE_POOL_MIN=2
 DATABASE_POOL_MAX=10
-\`\`\`
+```
 
 **4. Run Migrations:**
 - Use Sequelize or Prisma for schema migrations
@@ -1575,10 +1575,10 @@ DATABASE_POOL_MAX=10
 ## Backend REST API Endpoints
 
 ### Base URL Structure
-\`\`\`
+```
 Production: https://api.walkietalkie.com
 Development: http://localhost:3000
-\`\`\`
+```
 
 ### Authentication Endpoints
 
@@ -1703,7 +1703,7 @@ Development: http://localhost:3000
 ### Error Handling
 
 **Standard Error Response Format:**
-\`\`\`json
+```json
 {
   "error": {
     "code": "CHANNEL_NOT_FOUND",
@@ -1711,7 +1711,7 @@ Development: http://localhost:3000
     "statusCode": 404
   }
 }
-\`\`\`
+```
 
 **Common Error Codes:**
 - UNAUTHORIZED (401)
@@ -1739,7 +1739,7 @@ Development: http://localhost:3000
 - Errors and exceptions
 
 **Log Format (JSON):**
-\`\`\`json
+```json
 {
   "timestamp": "2025-11-03T10:30:00Z",
   "level": "info",
@@ -1748,7 +1748,7 @@ Development: http://localhost:3000
   "channelId": "channel-456",
   "metadata": {}
 }
-\`\`\`
+```
 
 ### Database Connection Pooling
 
@@ -1760,12 +1760,12 @@ Development: http://localhost:3000
 
 ### CORS Configuration
 
-\`\`\`
+```
 Allowed Origins: https://walkietalkie.com, http://localhost:* (dev only)
 Allowed Methods: GET, POST, PUT, DELETE, OPTIONS
 Allowed Headers: Authorization, Content-Type
 Credentials: true (for cookies/auth)
-\`\`\`
+```
       `
     },
     {
@@ -1788,7 +1788,7 @@ Riverpod provides a robust, compile-safe state management solution for Flutter. 
 
 **1. Authentication Providers**
 
-\`\`\`
+```
 authRepositoryProvider (Provider)
 - Provides: AuthRepository instance (Auth0 wrapper)
 - Scope: Global, never disposed
@@ -1807,11 +1807,11 @@ accessTokenProvider (FutureProvider)
 - Provides: Future<String> valid JWT access token
 - Dependencies: authRepositoryProvider
 - Auto-refresh: Before token expiry
-\`\`\`
+```
 
 **2. WebRTC Providers**
 
-\`\`\`
+```
 webrtcServiceProvider (Provider)
 - Provides: WebRTCService instance
 - Scope: Global, disposed on logout
@@ -1832,11 +1832,11 @@ connectionStatusProvider (StateProvider)
 activeSpeakerProvider (StateProvider)
 - Provides: String? userId of current speaker
 - Updates: From Socket.io events
-\`\`\`
+```
 
 **3. Socket.io Providers**
 
-\`\`\`
+```
 socketServiceProvider (Provider)
 - Provides: SocketService instance
 - Auto-connect: When authenticated
@@ -1851,11 +1851,11 @@ currentChannelProvider (StateNotifierProvider)
 - Provides: Channel? current active channel
 - Manages: Channel state, members list
 - Updates: From Socket.io channel events
-\`\`\`
+```
 
 **4. Channel Providers**
 
-\`\`\`
+```
 channelListProvider (FutureProvider)
 - Provides: Future<List<Channel>> user's channels
 - Dependencies: apiClient, currentUserProvider
@@ -1869,11 +1869,11 @@ channelMembersProvider (StreamProvider, family)
 duoConnectionProvider (StateNotifierProvider)
 - Provides: DuoConnection? current duo call
 - Manages: Duo-specific state (friend info, connection)
-\`\`\`
+```
 
 **5. UI State Providers**
 
-\`\`\`
+```
 loadingStateProvider (StateProvider)
 - Provides: bool isLoading
 - Used for: Global loading overlay
@@ -1885,11 +1885,11 @@ errorMessageProvider (StateProvider)
 notificationProvider (StreamProvider)
 - Provides: Stream<AppNotification> in-app notifications
 - Listens to: FCM foreground messages
-\`\`\`
+```
 
 ### Provider Dependencies Map
 
-\`\`\`mermaid
+```mermaid
 graph TD
     A[authRepositoryProvider] --> B[authStateProvider]
     B --> C[currentUserProvider]
@@ -1908,7 +1908,7 @@ graph TD
     
     H --> M[channelMembersProvider]
     I --> M
-\`\`\`
+```
 
 ## Riverpod Implementation Patterns
 
@@ -1968,7 +1968,7 @@ graph TD
 
 ### Loading States
 
-\`\`\`
+```
 // In Widget:
 final channelsAsync = ref.watch(channelListProvider);
 
@@ -1977,21 +1977,21 @@ channelsAsync.when(
   loading: () => CircularProgressIndicator(),
   error: (error, stack) => ErrorWidget(error),
 );
-\`\`\`
+```
 
 ### Refreshing Data
 
-\`\`\`
+```
 // Pull-to-refresh:
 onRefresh: () => ref.refresh(channelListProvider.future)
 
 // Manual invalidate:
 ref.invalidate(channelListProvider)
-\`\`\`
+```
 
 ### Listening to Changes
 
-\`\`\`
+```
 // Show snackbar on error:
 ref.listen<AsyncValue>(someProvider, (previous, next) {
   if (next.hasError) {
@@ -2000,11 +2000,11 @@ ref.listen<AsyncValue>(someProvider, (previous, next) {
     );
   }
 });
-\`\`\`
+```
 
 ### Combining Multiple Providers
 
-\`\`\`
+```
 final userInChannelProvider = Provider((ref) {
   final user = ref.watch(currentUserProvider).value;
   final channel = ref.watch(currentChannelProvider);
@@ -2012,7 +2012,7 @@ final userInChannelProvider = Provider((ref) {
   if (user == null || channel == null) return false;
   return channel.members.contains(user.id);
 });
-\`\`\`
+```
 
 ## Testing with Riverpod
 
@@ -2035,7 +2035,7 @@ final userInChannelProvider = Provider((ref) {
 
 ### Flow 1: Channel Creation and Joining
 
-\`\`\`mermaid
+```mermaid
 graph TD
     Start[User Opens App] --> Auth{Authenticated?}
     Auth -->|No| Login[Login Screen]
@@ -2072,11 +2072,11 @@ graph TD
     ChannelReady --> ConnectSocket[WebSocket: Join Channel]
     ConnectSocket --> WaitForPeers[Wait for Other Users]
     WaitForPeers --> ShowChannelUI[Show Call Screen]
-\`\`\`
+```
 
 ### Flow 2: Push-to-Talk Full Cycle
 
-\`\`\`mermaid
+```mermaid
 sequenceDiagram
     participant U as User
     participant UI as Flutter UI
@@ -2134,11 +2134,11 @@ sequenceDiagram
     else Permission Denied
         UI->>U: Show Permission Dialog
     end
-\`\`\`
+```
 
 ### Flow 3: Incoming Call Notification
 
-\`\`\`mermaid
+```mermaid
 sequenceDiagram
     participant UA as User A (Caller)
     participant Backend
@@ -2178,11 +2178,11 @@ sequenceDiagram
         Backend->>UB: Direct Socket.io event
         UB->>UB: Show in-app call dialog
     end
-\`\`\`
+```
 
 ### Flow 4: Token Refresh and Re-authentication
 
-\`\`\`mermaid
+```mermaid
 graph TD
     Start[App Makes API Request] --> CheckToken{Token Valid?}
     CheckToken -->|Yes| MakeRequest[Make API Request]
@@ -2203,11 +2203,11 @@ graph TD
     ResponseCheck -->|401 Unauthorized| ClearTokens
     ResponseCheck -->|Success| Success
     ResponseCheck -->|Other Error| HandleError[Show Error Message]
-\`\`\`
+```
 
 ### Flow 5: Background Audio Continuation
 
-\`\`\`mermaid
+```mermaid
 sequenceDiagram
     participant User
     participant App
@@ -2246,11 +2246,11 @@ sequenceDiagram
         Audio->>App: Clear notification
         Socket->>Socket: Leave channel
     end
-\`\`\`
+```
 
 ### Flow 6: Error Handling and Recovery
 
-\`\`\`mermaid
+```mermaid
 graph TD
     Normal[Normal Operation] --> Error{Error Occurs}
     
@@ -2285,13 +2285,13 @@ graph TD
     Error -->|API Error| ParseError[Parse Error Response]
     ParseError --> ShowMessage[Show User-Friendly Message]
     ShowMessage --> LogError[Log to Backend]
-\`\`\`
+```
 
 ## UI State Flow
 
 ### Call Screen State Machine
 
-\`\`\`
+```
 States:
 - IDLE: Not in call, no connection
 - CONNECTING: Joining channel, establishing WebRTC
@@ -2312,7 +2312,7 @@ Transitions:
 - CONNECTED → RECONNECTING: Network lost
 - RECONNECTING → CONNECTED: Network restored
 - ANY → IDLE: Leave channel
-\`\`\`
+```
       `
     }
   ];
@@ -3247,18 +3247,18 @@ Transitions:
 ### Step 2: Prepare Release Build
 
 **Generate Upload Key:**
-\`\`\`bash
+```bash
 keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
-\`\`\`
+```
 
 **Configure Signing (android/key.properties):**
-\`\`\`
+```
 storePassword=<password>
 keyPassword=<password>
 keyAlias=upload
 storeFile=<path-to-keystore>
-\`\`\`
+```
 
 **Build Release AAB:**
-\`\`\`bash
+```bash
 flutter
