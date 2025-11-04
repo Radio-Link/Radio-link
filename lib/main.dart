@@ -1,10 +1,10 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
-//import 'package:walkie_talkie/core/theme/app_theme.dart';
+import 'package:walkie_talkie/core/theme/app_theme.dart';
 import 'package:walkie_talkie/presentation/screens/duo_screen.dart';
 
 void main() {
-  runApp(RadioLink());
+  runApp(const RadioLink());
 }
 
 class RadioLink extends StatelessWidget {
@@ -12,9 +12,10 @@ class RadioLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Radio-link',
-      home: DuoScreen(),
+      theme: AppTheme.darkTheme, // 👈 applies your DM Serif text + colors
+      home: const DuoScreen(),
     );
   }
 }
