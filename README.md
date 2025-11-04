@@ -3260,5 +3260,906 @@ storeFile=<path-to-keystore>
 ```
 
 **Build Release AAB:**
-```bash
-flutter
+\`\`\`bash
+flutter build appbundle --release
+\`\`\`
+
+File will be at: `build/app/outputs/bundle/release/app-release.aab`
+
+### Step 3: Create App in Play Console
+
+1. Click "Create app" in Play Console
+2. Enter app details:
+   - Name: "Walkie-Talkie"
+   - Default language: English (United States)
+   - App or game: App
+   - Free or paid: Free
+3. Declare if app is primarily for children: No
+4. Accept declarations
+
+### Step 4: Set Up App Content
+
+**Store Listing:**
+1. App name: "Walkie-Talkie" (max 50 characters)
+2. Short description: (max 80 characters)
+   "Real-time push-to-talk voice communication with friends and groups"
+3. Full description: (max 4000 characters)
+   Write compelling description highlighting:
+   - Instant PTT communication
+   - Duo and group calls
+   - Secure authentication
+   - Background audio support
+4. App icon: Upload 512x512 PNG
+5. Feature graphic: Upload 1024x500 PNG
+6. Phone screenshots: Upload 2-8 images (1080x1920 recommended)
+7. Tablet screenshots: Optional
+8. Video: Optional YouTube link
+
+**Categorization:**
+1. App category: Communication
+2. Tags: Add relevant tags
+3. Email: Your support email
+4. Privacy policy: URL to your privacy policy (required)
+
+**App Access:**
+1. Declare if app requires any special access or login
+2. Provide demo credentials if login required for review
+
+**Ads:**
+1. Declare if app contains ads: No (or Yes if you add ads)
+
+**Content Rating:**
+1. Start questionnaire
+2. Select app category: Communication
+3. Answer all questions honestly
+4. Complete questionnaire
+5. Apply rating
+
+**Target Audience:**
+1. Select age groups: 13+ (due to voice communication)
+2. Complete target audience declaration
+
+**News Apps:**
+1. If applicable: No
+
+**COVID-19 Contact Tracing & Status Apps:**
+1. If applicable: No
+
+**Data Safety:**
+1. Complete data safety form:
+   - Does app collect user data? Yes
+   - Location data: No
+   - Personal info: Yes (name, email)
+   - Audio files: Yes (voice data, not stored permanently)
+2. Explain data usage and security practices
+3. Declare data sharing with third parties
+4. Link to privacy policy
+
+**Government Apps:**
+1. If applicable: No
+
+### Step 5: Create Release
+
+**Internal Testing Track (Recommended First):**
+1. Go to Testing > Internal testing
+2. Create new release
+3. Upload AAB file
+4. Add release name (e.g., "v1.0.0")
+5. Add release notes
+6. Add email addresses of testers
+7. Review and rollout release
+
+**Production Track (After Testing):**
+1. Go to Production
+2. Create new release
+3. Upload AAB file
+4. Complete release details
+5. Rollout percentage: 100%
+6. Review and start rollout
+
+### Step 6: App Review Process
+
+**Timeline:**
+- Internal testing: Available immediately
+- Production: 1-3 days (sometimes up to 7 days)
+
+**Common Rejection Reasons:**
+- Privacy policy missing or inadequate
+- App crashes on startup
+- Core functionality doesn't work
+- Permissions not explained
+- Content rating issues
+
+### Step 7: Post-Launch
+
+**Monitor:**
+- Crashes and ANRs in Play Console
+- User reviews and ratings
+- Download statistics
+
+**Update Process:**
+1. Increment version in pubspec.yaml
+2. Build new AAB
+3. Create new release in Play Console
+4. Upload and rollout
+
+## Apple App Store Deployment
+
+### Prerequisites Checklist
+- [ ] Apple Developer Account ($99/year)
+- [ ] macOS with Xcode installed
+- [ ] Release iOS build (IPA file)
+- [ ] App icons (1024x1024 PNG)
+- [ ] Screenshots for all required device sizes
+- [ ] Privacy policy URL
+- [ ] App description
+
+### Step 1: Create Apple Developer Account
+
+1. Go to https://developer.apple.com
+2. Click "Account" and sign in with Apple ID
+3. Enroll in Apple Developer Program
+4. Pay $99 annual fee
+5. Complete identity verification (may take 1-2 days)
+6. Accept agreements
+
+### Step 2: Create App ID & Certificates
+
+**Create App ID:**
+1. Go to Certificates, Identifiers & Profiles
+2. Click Identifiers > + (Add)
+3. Select "App IDs" > Continue
+4. Select "App" type
+5. Description: "Walkie-Talkie"
+6. Bundle ID: Explicit (e.g., com.yourcompany.walkietalkie)
+7. Enable capabilities:
+   - Push Notifications
+   - Background Modes
+8. Register
+
+**Create Certificates:**
+1. On Mac, open Keychain Access
+2. Keychain Access > Certificate Assistant > Request Certificate from CA
+3. Enter email and name, save to disk
+4. In Developer Portal: Certificates > + (Add)
+5. Select "iOS Distribution"
+6. Upload CSR file
+7. Download certificate
+8. Double-click to install in Keychain
+
+**Create Provisioning Profile:**
+1. Profiles > + (Add)
+2. Select "App Store" distribution
+3. Select your App ID
+4. Select distribution certificate
+5. Name: "Walkie-Talkie Production"
+6. Generate and download
+7. Double-click to install
+
+### Step 3: Configure Xcode
+
+**Open Project:**
+1. Open `ios/Runner.xcworkspace` in Xcode
+2. Select Runner project
+3. Select Runner target
+
+**Signing & Capabilities:**
+1. Signing: Automatically manage signing (or manual if preferred)
+2. Team: Select your developer team
+3. Bundle Identifier: Match App ID
+4. Capabilities:
+   - Enable "Push Notifications"
+   - Enable "Background Modes" (Remote notifications, Audio)
+
+**Build Settings:**
+1. Set to "Release" configuration
+2. Select "Any iOS Device" as destination
+3. Archive the app: Product > Archive
+
+**Upload APNs Key:**
+1. Keys > + (Add key)
+2. Name: "Walkie-Talkie APNs"
+3. Enable Apple Push Notifications service
+4. Register and download .p8 file
+5. Note Key ID and Team ID
+6. Upload to Firebase Console
+
+### Step 4: Create App in App Store Connect
+
+1. Go to https://appstoreconnect.apple.com
+2. Click "My Apps" > + (Add)
+3. Select "New App"
+4. Platform: iOS
+5. Name: "Walkie-Talkie"
+6. Primary Language: English (U.S.)
+7. Bundle ID: Select the one you created
+8. SKU: Unique identifier (e.g., walkietalkie001)
+9. User Access: Full Access
+
+### Step 5: Complete App Information
+
+**App Information:**
+1. Name: "Walkie-Talkie"
+2. Subtitle: (max 30 chars) "Push-to-Talk Voice Calls"
+3. Privacy Policy URL: Link to your privacy policy
+4. Category: Primary (Social Networking or Utilities)
+5. Content Rights: Check if you own all rights
+
+**Pricing and Availability:**
+1. Price: Free
+2. Availability: All countries (or select specific)
+
+**App Privacy:**
+1. Click "Get Started"
+2. Data Types Collected:
+   - Contact Info: Email address
+   - User Content: Audio data
+   - Identifiers: User ID
+3. For each data type:
+   - Purpose: App functionality
+   - Linked to user: Yes
+   - Tracking: No
+4. Save
+
+### Step 6: Prepare Version for Release
+
+**1.0 Version Information:**
+1. Click "+ Version or Platform"
+2. iOS
+3. Version: 1.0
+
+**Screenshots (Required for each device type):**
+
+**iPhone 6.7" Display:**
+- Size: 1290 x 2796 pixels
+- Minimum: 1 image, Maximum: 10
+
+**iPhone 6.5" Display:**
+- Size: 1284 x 2778 pixels
+- Minimum: 1 image, Maximum: 10
+
+**iPhone 5.5" Display:**
+- Size: 1242 x 2208 pixels
+- Minimum: 1 image, Maximum: 10
+
+**iPad Pro (6th Gen) 12.9":**
+- Size: 2048 x 2732 pixels
+- Minimum: 1 image, Maximum: 10
+
+**Promotional Text:** (max 170 chars)
+"Experience real-time voice communication with push-to-talk. Connect instantly with friends or join group conversations."
+
+**Description:** (max 4000 chars)
+Write detailed description covering:
+- Key features
+- How it works
+- Benefits
+- Usage scenarios
+
+**Keywords:** (max 100 chars)
+"walkie talkie,push to talk,ptt,voice chat,group call,instant communication"
+
+**Support URL:** Your support website
+
+**Marketing URL:** Optional
+
+**App Icon:**
+- Upload 1024x1024 PNG (no transparency, no alpha channel)
+
+### Step 7: Upload Build
+
+**From Xcode:**
+1. After archiving, Organizer window opens
+2. Select your archive
+3. Click "Distribute App"
+4. Select "App Store Connect"
+5. Select "Upload"
+6. Select distribution certificate and profile
+7. Upload
+8. Wait for processing (5-30 minutes)
+
+**In App Store Connect:**
+1. Refresh the page after processing completes
+2. Under Build section, click "+ Build"
+3. Select the uploaded build
+4. Save
+
+### Step 8: Submit for Review
+
+**Age Rating:**
+1. Complete questionnaire
+2. Set appropriate age rating (likely 12+ due to user interaction)
+
+**App Review Information:**
+1. Contact information (first name, last name, phone, email)
+2. Demo account credentials (if login required)
+3. Notes: Explain PTT functionality and how to test
+
+**Version Release:**
+1. Select "Automatically release this version"
+   - Or "Manually release this version" if you want control
+
+**Submit for Review:**
+1. Review all information
+2. Click "Submit for Review"
+
+### Step 9: App Review Process
+
+**Timeline:**
+- First submission: 2-7 days
+- Updates: 1-3 days
+- Expedited review: Available for critical issues
+
+**Review Status:**
+- Waiting for Review
+- In Review
+- Pending Developer Release (if manual release)
+- Ready for Sale
+
+**Common Rejection Reasons:**
+- App crashes on launch
+- Missing privacy policy
+- Features don't work as described
+- Permissions not explained
+- Background audio not working
+- Push notifications don't work
+
+**If Rejected:**
+1. Read rejection message carefully
+2. Fix issues
+3. Build new version or respond to reviewer
+4. Resubmit
+
+### Step 10: Post-Launch
+
+**Monitor:**
+- Crash reports in App Store Connect
+- User reviews
+- Download statistics
+- Revenue (if paid)
+
+**Update Process:**
+1. Increment version number
+2. Build and archive in Xcode
+3. Upload new build
+4. Create new version in App Store Connect
+5. Fill in "What's New" section
+6. Submit for review
+
+## Post-Deployment Checklist
+
+**Both Stores:**
+- [ ] Monitor crash reports daily
+- [ ] Respond to user reviews
+- [ ] Track key metrics (downloads, DAU, retention)
+- [ ] Collect user feedback
+- [ ] Plan update schedule (monthly recommended)
+- [ ] Monitor backend performance
+- [ ] Check notification delivery rates
+- [ ] Review WebRTC connection success rates
+
+**Marketing:**
+- [ ] Create landing page
+- [ ] Share on social media
+- [ ] Submit to app directories
+- [ ] Create demo videos
+- [ ] Reach out to tech bloggers
+- [ ] Consider paid advertising
+
+**Analytics:**
+- [ ] Set up Firebase Analytics or Mixpanel
+- [ ] Track key user flows
+- [ ] Monitor conversion rates
+- [ ] A/B test features
+
+**Support:**
+- [ ] Set up support email/ticketing system
+- [ ] Create FAQ documentation
+- [ ] Monitor app store reviews for issues
+- [ ] Provide timely responses
+
+## Common Deployment Issues
+
+**Issue: Build Fails**
+- Solution: Check Xcode/Android Studio logs, verify signing configuration
+
+**Issue: App Rejected for Privacy**
+- Solution: Ensure comprehensive privacy policy, explain data usage clearly
+
+**Issue: Crash on Launch in Review**
+- Solution: Test release builds thoroughly, check for missing API keys
+
+**Issue: Background Audio Not Working for Reviewers**
+- Solution: Provide detailed testing instructions, include demo account
+
+**Issue: Push Notifications Not Working**
+- Solution: Verify FCM/APNs configuration, test on multiple devices
+
+**Issue: Large App Size**
+- Solution: Enable app bundles (Android), optimize assets, use vector graphics
+      `
+    }
+  ];
+
+  const sections3 = [
+    {
+      id: 'ios-specific',
+      title: '13. iOS-Specific Implementation Guide',
+      content: `
+## iOS Platform-Specific Features
+
+This section covers iOS-specific implementations, configurations, and best practices that differ from Android.
+
+### iOS Project Configuration
+
+**Info.plist Required Keys:**
+
+\`\`\`xml
+<!-- Microphone Permission -->
+<key>NSMicrophoneUsageDescription</key>
+<string>Walkie-Talkie needs microphone access for voice communication</string>
+
+<!-- Background Modes -->
+<key>UIBackgroundModes</key>
+<array>
+    <string>audio</string>
+    <string>remote-notification</string>
+    <string>fetch</string>
+    <string>processing</string>
+</array>
+
+<!-- URL Schemes for Auth0 -->
+<key>CFBundleURLTypes</key>
+<array>
+    <dict>
+        <key>CFBundleTypeRole</key>
+        <string>None</string>
+        <key>CFBundleURLName</key>
+        <string>auth0</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>com.yourcompany.walkietalkie</string>
+        </array>
+    </dict>
+</array>
+
+<!-- Firebase Configuration -->
+<key>FirebaseAppDelegateProxyEnabled</key>
+<false/>
+\`\`\`
+
+### iOS Audio Session Configuration
+
+**AVAudioSession Setup:**
+
+iOS requires explicit audio session configuration for:
+- Recording and playback simultaneously
+- Background audio
+- Bluetooth audio routing
+- Handling interruptions
+
+**Configuration Steps:**
+
+1. **Import AVFoundation** in AppDelegate.swift
+2. **Set audio session category** to `.playAndRecord`
+3. **Set mode** to `.voiceChat` for optimized voice quality
+4. **Enable options**: 
+   - `.allowBluetooth` for Bluetooth headsets
+   - `.defaultToSpeaker` for speaker output
+   - `.mixWithOthers` if needed
+
+**Sample AppDelegate Configuration:**
+
+\`\`\`swift
+import UIKit
+import Flutter
+import AVFoundation
+import FirebaseCore
+import FirebaseMessaging
+
+@UIApplicationMain
+@objc class AppDelegate: FlutterAppDelegate {
+  override func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
+    
+    // Configure Firebase
+    FirebaseApp.configure()
+    
+    // Configure Audio Session
+    configureAudioSession()
+    
+    // Configure Notifications
+    if #available(iOS 10.0, *) {
+      UNUserNotificationCenter.current().delegate = self
+      
+      let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+      UNUserNotificationCenter.current().requestAuthorization(
+        options: authOptions,
+        completionHandler: { _, _ in }
+      )
+    }
+    
+    application.registerForRemoteNotifications()
+    
+    GeneratedPluginRegistrant.register(with: self)
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+  
+  private func configureAudioSession() {
+    let audioSession = AVAudioSession.sharedInstance()
+    do {
+      try audioSession.setCategory(
+        .playAndRecord,
+        mode: .voiceChat,
+        options: [.allowBluetooth, .defaultToSpeaker]
+      )
+      try audioSession.setActive(true)
+    } catch {
+      print("Failed to configure audio session: \\(error)")
+    }
+  }
+  
+  // Handle audio interruptions (phone calls, Siri, etc.)
+  override func applicationWillResignActive(_ application: UIApplication) {
+    NotificationCenter.default.post(name: NSNotification.Name("AudioInterruption"), object: nil)
+  }
+  
+  override func applicationDidBecomeActive(_ application: UIApplication) {
+    // Reactivate audio session if needed
+    do {
+      try AVAudioSession.sharedInstance().setActive(true)
+    } catch {
+      print("Failed to reactivate audio session: \\(error)")
+    }
+  }
+}
+\`\`\`
+
+### iOS Background Execution
+
+**Background Modes Configuration:**
+
+1. **In Xcode**: Select Runner target → Signing & Capabilities
+2. **Add Capability**: Background Modes
+3. **Enable**:
+   - Audio, AirPlay, and Picture in Picture
+   - Remote notifications
+   - Background fetch
+   - Background processing
+
+**Background Audio Best Practices:**
+
+- Keep audio session active during calls
+- Handle audio route changes (headphones plugged/unplugged)
+- Properly clean up when call ends
+- Monitor battery usage
+
+**Handling Audio Interruptions:**
+
+In Flutter, listen for interruptions:
+
+\`\`\`
+// In Flutter code
+void setupInterruptionListener() {
+  // Listen to app lifecycle changes
+  WidgetsBinding.instance.addObserver(this);
+}
+
+@override
+void didChangeAppLifecycleState(AppLifecycleState state) {
+  if (state == AppLifecycleState.paused) {
+    // Call interrupted (phone call, etc.)
+    // Pause audio streaming
+  } else if (state == AppLifecycleState.resumed) {
+    // Resume audio streaming
+  }
+}
+\`\`\`
+
+### iOS Push Notifications (APNs)
+
+**APNs vs FCM on iOS:**
+
+On iOS, Firebase uses APNs as the underlying delivery mechanism:
+1. Your backend sends to FCM
+2. FCM forwards to APNs
+3. APNs delivers to iOS device
+
+**Silent Push Notifications:**
+
+For background wakeup when receiving calls:
+
+\`\`\`json
+{
+  "aps": {
+    "content-available": 1,
+    "sound": ""
+  },
+  "data": {
+    "type": "incoming_call",
+    "channelId": "channel_123"
+  }
+}
+\`\`\`
+
+**VoIP Push Notifications (Advanced):**
+
+For true VoIP-style calling:
+
+1. **Enable PushKit**:
+   - Add Push Notifications capability in Xcode
+   - Import PushKit framework
+   - Register for VoIP notifications
+
+2. **Handle VoIP Push**:
+   - Wakes app even when terminated
+   - Must show CallKit UI within seconds
+   - Required for App Store approval if using "call" terminology
+
+3. **Integration Complexity**: High
+   - Requires native iOS code
+   - CallKit integration mandatory
+   - No simple Flutter plugin (as of 2025)
+
+**Recommendation**: For MVP, use standard remote notifications. VoIP push is overkill unless you need instant wakeup for terminated apps.
+
+### iOS Permissions
+
+**Request Permissions Early:**
+
+Unlike Android, iOS shows permission dialogs immediately on first request. Plan the flow carefully.
+
+**Microphone Permission:**
+
+\`\`\`dart
+import 'package:permission_handler/permission_handler.dart';
+
+Future<bool> requestMicrophonePermission() async {
+  final status = await Permission.microphone.request();
+  
+  if (status.isDenied) {
+    // Show explanation dialog
+    showDialog(/* ... */);
+  } else if (status.isPermanentlyDenied) {
+    // Direct user to settings
+    openAppSettings();
+  }
+  
+  return status.isGranted;
+}
+\`\`\`
+
+**Notification Permission:**
+
+\`\`\`dart
+Future<void> requestNotificationPermission() async {
+  final messaging = FirebaseMessaging.instance;
+  
+  final settings = await messaging.requestPermission(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+  
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    print('User granted permission');
+  }
+}
+\`\`\`
+
+### iOS WebRTC Considerations
+
+**ATS (App Transport Security):**
+
+If connecting to local/development servers:
+
+\`\`\`xml
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+    <!-- Better: specify exception domains -->
+    <key>NSExceptionDomains</key>
+    <dict>
+        <key>localhost</key>
+        <dict>
+            <key>NSExceptionAllowsInsecureHTTPLoads</key>
+            <true/>
+        </dict>
+    </dict>
+</dict>
+\`\`\`
+
+**Camera/Microphone Usage on iOS:**
+
+- First request shows system dialog
+- User can deny at any time in Settings
+- App must handle denied state gracefully
+- Explain why you need permissions before requesting
+
+**iOS WebRTC Audio Quality:**
+
+Configure audio constraints for iOS:
+
+\`\`\`dart
+final mediaConstraints = {
+  'audio': {
+    'echoCancellation': true,
+    'noiseSuppression': true,
+    'autoGainControl': true,
+    'googEchoCancellation': true,
+    'googNoiseSuppression': true,
+    'googAutoGainControl': true,
+  }
+};
+\`\`\`
+
+### iOS Widget Implementation (Limited)
+
+**iOS Widgets vs Android:**
+
+- iOS widgets are **read-only** (cannot have interactive buttons)
+- Built with SwiftUI/WidgetKit
+- Can only open app with deep link
+- Update via timeline provider
+
+**Basic Implementation:**
+
+1. **Add Widget Extension** in Xcode
+2. **Create Widget Provider**
+3. **Use App Groups** for data sharing
+4. **Update from Flutter** using home_widget package
+
+**Limitations:**
+- No PTT button in widget (iOS doesn't allow)
+- Can show last channel/status
+- Tapping opens app
+
+### iOS-Specific UI Considerations
+
+**Safe Area Insets:**
+
+iOS has notch/Dynamic Island:
+
+\`\`\`dart
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: SafeArea(
+      child: YourContent(),
+    ),
+  );
+}
+\`\`\`
+
+**iOS Design Guidelines:**
+
+- Use iOS-style navigation (back button placement)
+- Respect iOS haptic feedback patterns
+- Use Cupertino widgets where appropriate
+- Follow HIG (Human Interface Guidelines)
+
+**Platform-Specific UI:**
+
+\`\`\`dart
+if (Platform.isIOS) {
+  return CupertinoButton(/* ... */);
+} else {
+  return ElevatedButton(/* ... */);
+}
+\`\`\`
+
+### iOS Build & Deployment
+
+**Xcode Build Settings:**
+
+1. **Deployment Target**: iOS 12.0 minimum
+2. **Swift Language Version**: Swift 5
+3. **Architectures**: arm64 (required), armv7 (optional for older devices)
+4. **Bitcode**: Disabled (Flutter doesn't support)
+
+**Code Signing:**
+
+1. **Development**: Automatic signing OK
+2. **Production**: Use Distribution certificate and provisioning profile
+3. **Archive**: Product → Archive in Xcode
+4. **Export**: Use "App Store Connect" option
+
+**Common iOS Build Issues:**
+
+- **Signing errors**: Ensure certificates valid and profiles match Bundle ID
+- **Missing frameworks**: Check Podfile, run `pod install`
+- **Bitcode error**: Disable bitcode in build settings
+- **Module not found**: Clean build folder, reinstall pods
+
+### iOS-Specific Testing
+
+**Test on Real Devices:**
+
+Simulators have limitations:
+- No microphone/camera access
+- Push notifications don't work
+- Background audio behaves differently
+- WebRTC may not work properly
+
+**Test Scenarios:**
+
+1. Incoming phone call during voice chat
+2. Siri invocation during call
+3. Switching audio output (speaker, Bluetooth, headphones)
+4. App backgrounding/foregrounding
+5. Device lock/unlock during call
+6. Low battery mode effects
+7. Network switching (WiFi to cellular)
+
+### iOS Performance Optimization
+
+**Memory Management:**
+
+- iOS is stricter about memory than Android
+- Monitor memory usage in Xcode Instruments
+- Dispose WebRTC connections properly
+- Release audio resources when not needed
+
+**Battery Usage:**
+
+- Background audio drains battery
+- Monitor energy impact in Xcode
+- Optimize WebRTC bitrate
+- Use efficient codecs (Opus)
+
+**Network Optimization:**
+
+- iOS aggressively manages background network
+- Use Network Extension framework for monitoring
+- Handle network transitions smoothly
+
+### iOS App Store Review Specific
+
+**Common iOS Rejections:**
+
+1. **Background audio not working**: Test thoroughly before submission
+2. **Permissions not explained**: Ensure usage descriptions are clear
+3. **Push notifications don't work**: Verify APNs configuration
+4. **App crashes on iOS version reviewer uses**: Test on multiple iOS versions
+5. **Missing features described**: Ensure all advertised features work
+
+**Reviewer Testing Tips:**
+
+- Provide test account with clear instructions
+- Explain PTT functionality clearly
+- Note that two accounts needed to test
+- Mention background audio should continue when locked
+
+### iOS-Specific Troubleshooting
+
+**Audio Not Working:**
+- Check AVAudioSession configuration
+- Verify Info.plist has microphone description
+- Ensure audio session activated
+- Check for interruptions handling
+
+**Background Doesn't Work:**
+- Verify background modes enabled
+- Check audio session category
+- Ensure app doesn't get suspended
+- Monitor console logs for suspension reasons
+
+**Push Notifications Don't Arrive:**
+- Verify APNs key uploaded to Firebase
+- Check Bundle ID matches everywhere
+- Ensure device token sent to backend
+- Test with Apple's Push Notification Console
+
+**WebRTC Connection Fails:**
+- Check STUN/TURN configuration
+- Verify network permissions
+- Test on cellular and WiFi separately
+- Check for VPN/firewall interference
+      `
+    },
+    {
+      id: 'appendix',
+      title: '14. Appendices & References',
+      content: `
