@@ -35,7 +35,7 @@ class AppButtonStyles {
 
   // ✅ Secondary button: black background, white text
   static final ButtonStyle secondary = _base(
-    background: AppColors.black,
+    background:Colors.transparent,
     foreground: AppColors.white, 
   );
 }
