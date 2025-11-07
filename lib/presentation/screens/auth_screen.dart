@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:walkie_talkie/core/theme/colors.dart';
 import 'package:walkie_talkie/core/theme/button_style.dart';
 import 'package:walkie_talkie/core/theme/app_text_style.dart';
+import 'package:walkie_talkie/core/services/api_service.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -12,11 +13,46 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   bool isLogin = true;
+  bool isLoading = false;
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
 
   void toggleForm() => setState(() => isLogin = !isLogin);
+
+  Future<void> handleAuth() async {
+    setState(() => isLoading = true);
+
+    try {
+      if (isLogin) {
+        final res = await ApiService.login(
+          _emailController.text.trim(),
+          _passwordController.text.trim(),
+        );
+        await ApiService.saveToken(res['token']);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("✅ Logged in successfully")),
+        );
+      } else {
+        final res = await ApiService.register(
+          _nameController.text.trim(),
+          _emailController.text.trim(),
+          _passwordController.text.trim(),
+        );
+        await ApiService.saveToken(res['token']);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("✅ Registered successfully")),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("❌ Error: $e")),
+      );
+    } finally {
+      setState(() => isLoading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,11 +140,18 @@ class _AuthScreenState extends State<AuthScreen> {
 
                 // ✅ Submit button
                 ElevatedButton(
-                  onPressed: () {
-                    // TODO: API call
-                  },
+                  onPressed: isLoading ? null : handleAuth,
                   style: AppButtonStyles.primary,
-                  child: Text(isLogin ? "Login" : "Register"),
+                  child: isLoading
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : Text(isLogin ? "Login" : "Register"),
                 ),
                 const SizedBox(height: 20),
 
